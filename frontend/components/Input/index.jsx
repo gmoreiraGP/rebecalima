@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { Stack } from '@chakra-ui/layout'
 import {
   InputGroup,
   Input as ChakraInput,
@@ -8,21 +8,15 @@ import {
   FormHelperText,
 } from '@chakra-ui/react'
 
-const Input = forwardRef((props, ref) => {
+const Input = props => {
   return (
-    <>
+    <Stack>
       <FormLabel {...props}>{props.label}</FormLabel>
       <InputGroup>
         {props.leftIcon && (
           <InputLeftAddon children={props.leftIcon} {...props} />
         )}
-        <ChakraInput
-          size='md'
-          variant='filled'
-          id={props.id}
-          ref={ref}
-          {...props}
-        />
+        <ChakraInput size='md' variant='filled' {...props} />
         {props.rightIcon && (
           <InputRightAddon children={props.rightIcon} {...props} />
         )}
@@ -30,8 +24,8 @@ const Input = forwardRef((props, ref) => {
       {props.helpertext && (
         <FormHelperText {...props}>{props.helpertext}</FormHelperText>
       )}
-    </>
+    </Stack>
   )
-})
+}
 
 export default Input

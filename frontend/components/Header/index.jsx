@@ -1,14 +1,15 @@
-import { Box, Flex, Heading } from '@chakra-ui/layout'
-import { propNames } from '@chakra-ui/styled-system'
-import { FaExclamationCircle } from 'react-icons/fa'
+import { Button } from '@chakra-ui/button'
+import { Flex, Heading } from '@chakra-ui/layout'
+import { FaExclamationCircle, FaPlusSquare } from 'react-icons/fa'
 
 const Header = props => {
-  return props.title ? (
+  const { title, add } = props
+  return title ? (
     <Flex
       h='100px'
       w='100%'
+      justifyContent='space-between'
       alignItems='center'
-      alignSelf='start'
       p={4}
       bg='tan.100'
       color='white'
@@ -21,9 +22,16 @@ const Header = props => {
       >
         <FaExclamationCircle size={25} />
         <Heading as='h1' ml={4}>
-          {props.title}
+          {title}
         </Heading>
       </Flex>
+      {add && (
+        <Flex>
+          <Button leftIcon={<FaPlusSquare />} variant='tan'>
+            new
+          </Button>
+        </Flex>
+      )}
     </Flex>
   ) : (
     <Flex

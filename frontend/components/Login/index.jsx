@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { FormControl, FormErrorMessage } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/button'
 import { Divider, Flex, Grid, Heading, Link, Text } from '@chakra-ui/layout'
-import Input from '@/components/Input'
 import { FaPaperPlane, FaGoogle } from 'react-icons/fa'
+import Input from '@/components/Input'
 
 const fullWidth = {
   width: '100%',
@@ -84,7 +84,6 @@ const Login = () => {
               label='Senha'
               placeholder='Digite sua senha'
               helpertext='Digite sua senha no campo acima'
-              mt={2}
             />
             <FormErrorMessage>
               {errors.password && errors.password.message}
