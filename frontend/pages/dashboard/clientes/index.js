@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { withRouter } from 'next/router'
 import Layout from '@/components/Layout'
 import { useToast } from '@chakra-ui/react'
@@ -7,37 +7,29 @@ import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert'
 import { Table, Th, Thead, Tr, Tbody, Td, TableCaption } from '@chakra-ui/table'
 import { FaEye } from 'react-icons/fa'
 import { mask } from 'remask'
-import directus from '@/lib/directus'
+import { clients } from '@/lib/directus'
 
-// const patternWhats =
+function Clientes(props) {
+  const { clientes } = props
+  const [error, setError] = useState()
+  const toastNotification = useToast()
 
-function Clientes() {
-  const [clients, setClients] = useState([])
-  const error = useToast()
-
-  useEffect(async () => {
-    await directus
-      .items('clients')
-      .readMany()
-      .then(response => {
-        setClients(response.data)
-      })
-      .catch(err => {
-        error({
-          description: `${err}`,
-          status: 'error',
-        })
-      })
-  }, [])
+  const showError = () => {
+    if (clientes.err) {
+      setError(clientes.err)
+      return toastNotification(error)
+    }
+  }
 
   return (
     <Layout title='Clientes' add>
       <Flex alignSelf='flex-start' w='100%' p={4}>
-        {!clients.length == 0 ? (
+        {error && showError()}
+        {!clientes.length == 0 ? (
           <Table size='lg' colorScheme='blackAlpha' variant='striped'>
             <TableCaption placement='top'>
               <Heading as='h2' size='lg'>
-                Todos os clientes
+                Todos os props.clientes
               </Heading>
             </TableCaption>
             <Thead>
@@ -49,14 +41,14 @@ function Clientes() {
               </Tr>
             </Thead>
             <Tbody>
-              {clients.map(({ id, name, email, whatsapp }) => {
+              {clientes.map(({ id, name, email, whatsapp }) => {
                 return (
                   <Tr key={id}>
                     <Td>{name}</Td>
                     <Td>{email}</Td>
                     <Td>
                       <a
-                        href={`https://api.whatsapp.com/send?phone=${whatsapp}`}
+                        href={`https://api.whatsapp.com/send?phone=55${whatsapp}`}
                       >
                         {mask(whatsapp, ['99 9.9999-9999'])}
                       </a>
@@ -84,6 +76,14 @@ function Clientes() {
       </Flex>
     </Layout>
   )
+}
+
+Clientes.getInitialProps = async function () {
+  const clientes = await clients
+    .readMany()
+    .then(res => res.data)
+    .catch(err => err)
+  return { clientes: clientes }
 }
 
 export default withRouter(Clientes)

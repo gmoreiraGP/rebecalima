@@ -54,7 +54,6 @@ function Client({ props }) {
             )
           }
         )}
-        {/* <Text>{client.email}</Text> */}
       </Flex>
     </Layout>
   )
@@ -64,10 +63,6 @@ Client.getInitialProps = async function (ctx) {
   const client = await clients.readOne(
     `${ctx.query.id}?fields=id,name,whatsapp,email,checklist_client.*`
   )
-  // const checklist = await checklists.readOne(
-  //   'a409f27d-a866-4462-9313-828f6862b8b0'
-  // )
-  // console.log(checklist)
 
   return {
     props: {
