@@ -1,3 +1,4 @@
+import React from 'react'
 import { Stack } from '@chakra-ui/layout'
 import {
   InputGroup,
@@ -8,7 +9,7 @@ import {
   FormHelperText,
 } from '@chakra-ui/react'
 
-const Input = props => {
+const Input = React.forwardRef((props, ref) => {
   return (
     <Stack>
       <FormLabel {...props}>{props.label}</FormLabel>
@@ -16,7 +17,7 @@ const Input = props => {
         {props.leftIcon && (
           <InputLeftAddon children={props.leftIcon} {...props} />
         )}
-        <ChakraInput size='md' variant='filled' {...props} />
+        <ChakraInput size='md' variant='filled' ref={ref} {...props} />
         {props.rightIcon && (
           <InputRightAddon children={props.rightIcon} {...props} />
         )}
@@ -26,6 +27,6 @@ const Input = props => {
       )}
     </Stack>
   )
-}
+})
 
 export default Input

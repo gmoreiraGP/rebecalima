@@ -1,9 +1,19 @@
 import { Button } from '@chakra-ui/button'
 import { Flex, Heading } from '@chakra-ui/layout'
+import { useDisclosure } from '@chakra-ui/hooks'
 import { FaExclamationCircle, FaPlusSquare } from 'react-icons/fa'
+import Modal from '@/components/Modal'
 
 const Header = props => {
-  const { title, add } = props
+  const {
+    title,
+    add,
+    modalTitle,
+    modalContent,
+    modalAction,
+    modalActionContent,
+  } = props
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return title ? (
     <Flex
       h='100px'
@@ -27,9 +37,18 @@ const Header = props => {
       </Flex>
       {add && (
         <Flex>
-          <Button leftIcon={<FaPlusSquare />} variant='tan'>
-            new
+          <Button onClick={onOpen} variant='tan' _focus={{ boxShadow: 'none' }}>
+            <FaPlusSquare size={30} />
           </Button>
+          <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            modalForm={true}
+            modalTitle={modalTitle}
+            modalContent={modalContent}
+            modalAction={modalAction}
+            modalActionContent={modalActionContent}
+          />
         </Flex>
       )}
     </Flex>

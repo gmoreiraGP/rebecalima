@@ -3,7 +3,15 @@ import Sidebar from '@/components/Sidebar'
 import Main from '@/components/Main'
 import Header from '@/components/Header'
 
-const Layout = ({ children, title }) => {
+const Layout = ({
+  children,
+  title,
+  add,
+  modalTitle,
+  modalContent,
+  modalAction,
+  modalActionContent,
+}) => {
   return (
     <Grid
       templateRows='1fr'
@@ -17,7 +25,14 @@ const Layout = ({ children, title }) => {
     >
       <Sidebar />
       <Main>
-        <Header title={title} />
+        <Header
+          title={title}
+          add={add}
+          modalContent={modalContent}
+          modalAction={modalAction}
+          modalTitle={modalTitle}
+          modalActionContent={modalActionContent}
+        />
         <Flex flex='1' justifyContent='center' alignItems='center' w='100%'>
           {children}
         </Flex>

@@ -1,30 +1,38 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { withRouter } from 'next/router'
-import Layout from '@/components/Layout'
+import { mask } from 'remask'
+import { FaEye } from 'react-icons/fa'
 import { useToast } from '@chakra-ui/react'
 import { Flex, Heading, Link, Stack } from '@chakra-ui/layout'
 import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert'
 import { Table, Th, Thead, Tr, Tbody, Td, TableCaption } from '@chakra-ui/table'
-import { FaEye } from 'react-icons/fa'
-import { mask } from 'remask'
+
 import { clients } from '@/lib/directus'
+import Layout from '@/components/Layout'
+import CreateClient from '@/components/Client/CreateClient'
 
 function Clientes(props) {
   const { clientes } = props
-  const [error, setError] = useState()
+  const [toastError, setToastError] = useState()
   const toastNotification = useToast()
 
   const showError = () => {
     if (clientes.err) {
-      setError(clientes.err)
-      return toastNotification(error)
+      setToastError(clientes.err)
+      return toastNotification(toastError)
     }
   }
 
   return (
-    <Layout title='Clientes' add>
+    <Layout
+      title='Clientes'
+      add={true}
+      modalContent={<CreateClient />}
+      modalTitle='Criar Cliente'
+      modalActionContent='Criar Cliente'
+    >
       <Flex alignSelf='flex-start' w='100%' p={4}>
-        {error && showError()}
+        {toastError && showError()}
         {!clientes.length == 0 ? (
           <Table size='lg' colorScheme='blackAlpha' variant='striped'>
             <TableCaption placement='top'>
